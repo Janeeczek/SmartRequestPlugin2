@@ -25,16 +25,7 @@ public class myAutostart extends CordovaPlugin {
         callbackContext.error("\"" + action + "\" is not a recognized action.");
         return false;
       }
-      String message;
-      String duration;
-      try {
-        JSONObject options = args.getJSONObject(0);
-        //message = options.getString("message");
-        duration = options.getString("duration");
-      } catch (JSONException e) {
-        callbackContext.error("Error encountered: " + e.getMessage());
-        return false;
-      }
+
       FirebaseApp.initializeApp(applicationContext);
       Toast toast = Toast.makeText(cordova.getActivity(), "TEST", DURATION_LONG.equals(duration) ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
       // Create the toast

@@ -1,0 +1,14 @@
+{
+  "name": "cordova-plugin-autostart",
+  "version": "0.0.1",
+  "cordova": {
+    "id": "cordova-plugin-autostart",
+    "platforms": []
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

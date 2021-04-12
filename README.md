@@ -28,6 +28,7 @@ Rozpakuj go
 12. przykładowy value = key=AAAASCEBOlU:APA91bEiuZNuU4pW1Tqa04RWs5vsv7dbgBoojpjRLjZwuymOOGjy8cWNNMzjl8k20Cr296PNsdEtobY-w0VQxko2qfymdluNvz4RDekLL4nSf7HD-IhRGEwLNAJfKVH-A16OO7kh59OB
 13.  nie zapomnij przed wartościa server key dodać *key=*!!!!!
 14. W Body , podzakładka *raw* wkleić :
+<code>
 {
 "to" : "token",
 "collapse_key" : "type_a",
@@ -36,6 +37,7 @@ Rozpakuj go
 "title": "Title : Data"
 }
 }
+      </code>
 15. przykładowy raw:
 {
 "to" : "f0eJSQcKTsytOOxY2o7egN:APA91bGdAqw1jEsfda8NAWBHFuA00iJ1DEyPS5lRzzf1vECZV1CqOisS-Ri_m_ikS52kpMwiKKmG1KQVMX-pp40eUK-501_Bqe3YaLvtrRM3AYdAQ71iSJVsWVB0qVNbO9v0o8NXVeaW",

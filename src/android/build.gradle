@@ -15,8 +15,8 @@ repositories {
         url "https://maven.google.com"
     }
 }
-
-
+android.useAndroidX=true
+android.enableJetifier=true
 android {
     buildTypes {
         

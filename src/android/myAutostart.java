@@ -2,7 +2,7 @@ package com.example.cordova.plugin;
 
 import android.content.Context;
 import android.widget.Toast;
-import com.example.cordova.plugin.services.MyFirebaseMessagingService;
+import com.example.cordova.plugin.FCM.MyFirebaseMessagingService;
 import com.google.firebase.FirebaseApp;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -13,13 +13,20 @@ import org.json.JSONObject;
 
 public class myAutostart extends CordovaPlugin {
   private static final String DURATION_LONG = "long";
-
+  public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE= 2323;
 
 
   @Override
   public boolean execute(String action, JSONArray args,
     final CallbackContext callbackContext) {
       Context  applicationContext = this.cordova.getActivity().getApplicationContext();
+      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Settings.canDrawOverlays(cordovaInterface.getContext()))
+      {RequestPermission();}
+      // enable Cordova apps to be started in the background
+      Bundle extras = getIntent().getExtras();
+      if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+          moveTaskToBack(true);
+      }
       // Verify that the user sent a 'show' action
       if (!action.equals("show")) {
         callbackContext.error("\"" + action + "\" is not a recognized action.");
@@ -42,3 +49,13 @@ public class myAutostart extends CordovaPlugin {
       return true;
   }
 }
+    private void RequestPermission() {
+        // Check if Android M or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Show alert dialog to the user saying a separate permission is needed
+            // Launch the settings activity if the user prefers
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + cordovaInterface.getActivity().getPackageName()));
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+        }
+    }

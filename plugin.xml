@@ -1,14 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-autostart" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>myautostart</name>
-    <js-module name="myautostart" src="www/myautostart.js">
-        <clobbers target="cordova.plugins.myautostart" />
+    <name>myAutostart</name>
+    <js-module name="autostart" src="www/autostart.js">
+        <clobbers target="cordova.plugins.autostart" />
     </js-module>
+	
     <platform name="android">
+		<hook type="after_plugin_install" src="scripts/apply-to-gradle.properties.js" />
+		
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+			<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/iconn" />
+		</config-file>
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="myautostart">
-                <param name="android-package" value="com.example.cordova.plugin.myAutostart"/>
+            <feature name="autostart">
+                <param name="android-package" value="com.example.cordova.plugin.autostart"/>
+				<param name="onload" value="true" />
             </feature>
+			<preference name="AndroidXEnabled" value="true" />
         </config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -28,19 +38,19 @@
 		
 		<resource-file src="src/android/autostartString.xml" target="res/values/autostartString.xml" />
 		<resource-file src="src/android/colors.xml" target="res/values/colors.xml" />
-		
-        <source-file src="src/android/myAutostart.java" target-dir="src/com/example/cordova/plugin" />
+		<resource-file src="src/android/iconsa.png" target="res/drawable/iconn.png" />
+        <source-file src="src/android/autostart.java" target-dir="src/com/example/cordova/plugin" />
 		
 		<source-file src="src/android/FCM/MyFirebaseMessagingService.java" target-dir="src/com/example/cordova/plugin/FCM" />
 		
 		<framework src="src/android/build.gradle" custom="true" type="gradleReference" />
 		
-		<framework src="com.google.firebase:firebase-analytics:18.0.2" />
-		<framework src="com.google.firebase:firebase-messaging-directboot:20.2.0" />
+		<framework src="com.google.firebase:firebase-analytics:18.0.3" />
+		<framework src="com.google.firebase:firebase-messaging-directboot:21.1.0" />
 		<framework src="androidx.appcompat:appcompat:1.1.0" />
 		<framework src="com.google.android.material:material:1.1.0" />
 		<framework src="androidx.constraintlayout:constraintlayout:1.1.3" />
-		<framework src="com.google.firebase:firebase-messaging:21.0.1" />
+		<framework src="com.google.firebase:firebase-messaging:21.1.0" />
 		<framework src="androidx.work:work-runtime:2.3.4" />
     </platform>
 	

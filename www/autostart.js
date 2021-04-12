@@ -1,26 +1,28 @@
+
 var exec = require('cordova/exec');
 // Empty constructor
-function myautostart() {}
+function autostart() {}
 
 // The function that passes work along to native shells
 // Message is a string, duration may be 'long' or 'short'
-myautostart.prototype.show = function(message, duration, successCallback, errorCallback) {
+autostart.prototype.show = function(message, duration, successCallback, errorCallback) {
   var options = {};
   options.message = message;
   options.duration = duration;
-  cordova.exec(successCallback, errorCallback, 'myautostart', 'show', [options]);
+  cordova.exec(successCallback, errorCallback, 'autostart', 'show', [options]);
 }
 
 // Installation constructor that binds ToastyPlugin to window
-myautostart.install = function() {
+autostart.install = function() {
   if (!window.plugins) {
     window.plugins = {};
   }
-  window.plugins.myautostart = new myautostart();
-  return window.plugins.myautostart;
+  window.plugins.autostart = new autostart();
+  return window.plugins.autostart;
 };
-cordova.addConstructor(myautostart.install);
+cordova.addConstructor(autostart.install);
 
 exports.coolMethod = function (arg0, success, error) {
-    exec(success, error, 'myautostart', 'coolMethod', [arg0]);
+    exec(success, error, 'autostart', 'coolMethod', [arg0]);
 };
+

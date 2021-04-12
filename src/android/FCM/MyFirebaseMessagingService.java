@@ -1,4 +1,4 @@
-package com.example.cordova.plugin.services;
+package com.example.cordova.plugin.FCM;
 
 import android.app.ActivityManager;
 import android.app.NotificationChannel;
@@ -9,11 +9,10 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import android.util.Log;
-import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,15 +21,36 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+/*
+TUTAJ NALEŻY DODAC MainActivity.class
+np. import com.example.test.MainActivity;
+ */
+
+
 public class MyFirebaseMessagingService  extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     private static  String myToken;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        Class mainActivity = null;
+
+        Context context = getApplicationContext();
+        String  packageName = context.getPackageName();
+        Intent  launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+
+        mainActivity = launchIntent.getComponent().getClass();
+        /*try {
+            //loading the Main Activity to not import it in the plugin
+            mainActivity = Class.forName(className);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+         */
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         if (remoteMessage.getData().size() > 0) {
             if (remoteMessage.getData().containsKey("START")) {
-                if(!isMyServiceRunning(ForeService.class)) {
+
                     //Intent intent = new Intent(getApplicationContext(), ForeService.class);
                     /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         getApplicationContext().startForegroundService(intent);
@@ -45,10 +65,8 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
-                }
+
             } else if (remoteMessage.getData().containsKey("STOP")) {
-                Intent intent = new Intent(getApplicationContext(), ForeService.class);
-                getApplicationContext().stopService(intent);
             } else {
 
                 handleNow();
@@ -115,9 +133,11 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
         String channelId =  getStringResource("default_notification_channel_id");//getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(context, channelId)
-                        .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
+                        .setSmallIcon(getApplicationInfo().icon)
                         .setContentTitle(getStringResource("fcm_message"))
                         .setContentText(messageBody)
                         .setAutoCancel(true)

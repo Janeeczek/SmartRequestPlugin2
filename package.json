@@ -1,8 +1,8 @@
 {
-  "name": "cordova-plugin-autostart",
+  "name": "NetrixFcmPlugin",
   "version": "0.0.1",
   "cordova": {
-    "id": "cordova-plugin-autostart",
+    "id": "cordova-plugin-netrixfcmplugin",
     "platforms": []
   },
   "keywords": [

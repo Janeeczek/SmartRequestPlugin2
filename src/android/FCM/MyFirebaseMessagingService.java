@@ -1,6 +1,6 @@
 package com.example.cordova.plugin.FCM;
 
-import android.app.ActivityManager;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,18 +9,11 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
+import com.example.test.MainActivity;
 /*
 TUTAJ NALEŻY DODAC MainActivity.class
 np. import com.example.test.MainActivity;
@@ -28,38 +21,14 @@ np. import com.example.test.MainActivity;
 
 
 public class MyFirebaseMessagingService  extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
-    private static  String myToken;
+    private static final String TAG = " [^^^MyFirebaseMsgService^^^]";
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Class mainActivity = null;
 
-        Context context = getApplicationContext();
-        String  packageName = context.getPackageName();
-        Intent  launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-
-        mainActivity = launchIntent.getComponent().getClass();
-        /*try {
-            //loading the Main Activity to not import it in the plugin
-            mainActivity = Class.forName(className);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-         */
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        System.out.println(TAG+  " From: " + remoteMessage.getFrom());
         if (remoteMessage.getData().size() > 0) {
             if (remoteMessage.getData().containsKey("START")) {
-
-                    //Intent intent = new Intent(getApplicationContext(), ForeService.class);
-                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        getApplicationContext().startForegroundService(intent);
-                    } else {
-                        getApplicationContext().startService(intent);
-                    }
-
-                     */
-                    System.out.println("SKFNASKFJASKFJSKFJKSAJFKLSAJFKLSFJKLSFJKLSFJKSLFJSKFJSKFJKFSKJFKFJk START");
+                    System.out.println(TAG+" ODEBRANO KOMENDE START ");
                     //Toast.makeText(this, "STARTUJE ACTUVUT", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -67,46 +36,24 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
 
 
             } else if (remoteMessage.getData().containsKey("STOP")) {
+                //do rozwiniecia opcja komendy STOP
             } else {
 
                 handleNow();
             }
         }
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            System.out.println(TAG+ " Message Notification Body: " + remoteMessage.getNotification().getBody());
             //sendNotification(remoteMessage.getNotification().getBody());
         }
     }
     @Override
     public void onNewToken(String token) {
-        Log.d(TAG, "Refreshed token: " + token);
-        myToken = token;
+        System.out.println(TAG+ " Refreshed token: " + token);
         sendRegistrationToServer(token);
     }
-    public static String getMyToken(){
-        System.out.println( "Fetching FCM registration token failedaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdSDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA11111111111111111111111111111");
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            System.out.println( "Fetching FCM registration token failedaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdSDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2222222222222222222222222");
-                            return;
-                        }
-                        // Get new FCM registration token
-                        System.out.println( "Fetching FCM registration token failedaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdSDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA333333333333333333333333333333333333");
-                        String token = task.getResult();
-                        System.out.println(token);
-                        myToken = token;
-                        // Log and toast
-
-                    }
-                });
-
-        return myToken;
-    }
     private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
+        System.out.println(TAG+ " Short lived task is done.");
     }
 
 
@@ -115,19 +62,8 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
     }
 
     private void sendNotification(String messageBody) {
-        Class mainActivity = null;
         Context context = getApplicationContext();
-        String  packageName = context.getPackageName();
-        Intent  launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-        String  className = launchIntent.getComponent().getClassName();
-
-        try {
-            //loading the Main Activity to not import it in the plugin
-            mainActivity = Class.forName(className);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Intent intent = new Intent(context, mainActivity);
+        Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -153,15 +89,6 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(0 , notificationBuilder.build());
-    }
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
     private String getStringResource(String name) {
         Context applicationContext = getApplicationContext();

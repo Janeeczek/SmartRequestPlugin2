@@ -11,9 +11,14 @@ import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+
+import com.example.cordova.plugin.NetrixFcmPlugin;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.example.test.MainActivity;
+
+
+import java.util.HashMap;
+import java.util.Map;
 /*
 TUTAJ NALEŻY DODAC MainActivity.class
 np. import com.example.test.MainActivity;
@@ -24,16 +29,19 @@ public class MyFirebaseMessagingService  extends FirebaseMessagingService {
     private static final String TAG = " [^^^MyFirebaseMsgService^^^]";
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        Map<String, Object> data = new HashMap<String, Object>();
+
 
         System.out.println(TAG+  " From: " + remoteMessage.getFrom());
         if (remoteMessage.getData().size() > 0) {
             if (remoteMessage.getData().containsKey("START")) {
                     System.out.println(TAG+" ODEBRANO KOMENDE START ");
                     //Toast.makeText(this, "STARTUJE ACTUVUT", Toast.LENGTH_SHORT).show();
+                    data.put("rozkaz", "START");
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
-
+                    NetrixFcmPlugin.sendPushPayload(data);
 
             } else if (remoteMessage.getData().containsKey("STOP")) {
                 //do rozwiniecia opcja komendy STOP

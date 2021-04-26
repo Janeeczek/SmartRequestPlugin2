@@ -1,8 +1,8 @@
 {
-  "name": "NetrixFcmPlugin",
+  "name": "SmartRequestPlugin",
   "version": "0.0.1",
   "cordova": {
-    "id": "cordova-plugin-netrixfcmplugin",
+    "id": "cordova-plugin-netrixreqplugin",
     "platforms": []
   },
   "keywords": [

@@ -1,0 +1,15 @@
+plugman install --platform android --project C:\Users\Jan.Mazurek\CordovaProjects\phoneProject\platforms\android --plugin C:\Users\Jan.Mazurek\CordovaProjects\SmartRequestPlugin --link
+plugman uninstall --platform android --project C:\Users\Jan.Mazurek\CordovaProjects\phoneProject\platforms\android --plugin C:\Users\Jan.Mazurek\CordovaProjects\SmartRequestPlugin
+cordova create test2 com.example.test2 Test2
+18
+18
+18
+18
+5
+77 h = 1409
+
+77+16
+
+ 
+
+

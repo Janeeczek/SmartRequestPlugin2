@@ -1,4 +1,4 @@
-# StartFromFCM_plugin
+# SmartRequestPlugin
 Ściągnij cały projekt pluginu z githuba 
 Rozpakuj go
 
@@ -10,7 +10,7 @@ Rozpakuj go
 
 5. Należy edytować plik index.js (\platforms\android\app\src\main\assets\www\js) dodając na początku funkcji onDeviceReady() : 
 ```javascript
-		SmartRequestPlugin.ready();
+		
 		SmartRequestPlugin.getRequest('<URL>',(t)=> {console.log(t);},(e)=> {console.log(e);});
 ```
 6. <URL> tu wpisz adres strony 

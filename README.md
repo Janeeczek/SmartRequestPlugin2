@@ -15,7 +15,7 @@ Rozpakuj go
 		
 		SmartRequestPlugin.getRequest('<URL>',(t)=> {console.log(t);},(e)=> {console.log(e);});
 ```
-<URL> -> tu wpisz adres strony 
+6.1 <URL> -> tu wpisz adres strony 
 
 
 //INSTALACJA ANDROID

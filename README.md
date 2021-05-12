@@ -19,6 +19,7 @@ Rozpakuj go
 
 
 //INSTALACJA ANDROID
+
 0. instalacja plugman z npm: npm install -g plugman
 
 1. instalacja pluginu komendą : plugman install --platform android --project <scieżka do folderu \platoforms\android w projekcie do którego ma być wgrany plugin> --plugin <ścieżka do folderu z pluginem>

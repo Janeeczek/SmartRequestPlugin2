@@ -4,12 +4,17 @@
     <js-module name="SmartRequestPlugin" src="www/SmartRequestPlugin.js">
         <clobbers target="SmartRequestPlugin" />
     </js-module>
-	
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="SmartRequestPlugin">
+                <param name="ios-package" value="SmartRequestPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="UseSwiftLanguageVersion" value="5" />
+        </config-file>
+        <source-file src="src/ios/SmartRequestPlugin.swift" />
+    </platform>
     <platform name="android">
-		<!--<hook type="after_plugin_install" src="scripts/apply-to-gradle.properties.js" />-->
-		
-
-		
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="SmartRequestPlugin">
                 <param name="android-package" value="com.example.cordova.plugin.SmartRequestPlugin"/>
@@ -17,18 +22,9 @@
             </feature>
         </config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest">
-			
 			<uses-permission android:name="android.permission.INTERNET" />
-			
 		</config-file>
-		
-		
-		
-		
-		
         <source-file src="src/android/SmartRequestPlugin.java" target-dir="src/com/example/cordova/plugin" />
 		<framework src="com.android.volley:volley:1.2.0" />
-		
     </platform>
-	
 </plugin>
